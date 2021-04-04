@@ -1,16 +1,6 @@
-import Button from "@material-ui/core/Button";
 import React from "react";
+import { NavBar } from "./NavBar";
 
-function App() {
-	return (
-		<div className="App">
-			<header className="App-header">
-				<Button size="large" variant="contained" color="primary">
-					Hello World
-				</Button>
-			</header>
-		</div>
-	);
-}
-
-export default App;
+export default () => {
+	return <NavBar />;
+};
