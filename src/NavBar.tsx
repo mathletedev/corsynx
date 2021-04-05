@@ -10,6 +10,10 @@ import { Menu as MenuIcon } from "@material-ui/icons";
 import React from "react";
 import { NavDrawer } from "./NavDrawer";
 
+interface Props {
+	title: string;
+}
+
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
 		root: {
@@ -24,7 +28,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export const NavBar: React.FC = () => {
+export const NavBar: React.FC<Props> = ({ title }) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 
@@ -42,7 +46,7 @@ export const NavBar: React.FC = () => {
 						<MenuIcon />
 					</IconButton>
 					<Typography variant="h6" className={classes.title}>
-						Home
+						{title}
 					</Typography>
 					<Button color="inherit">Login</Button>
 				</Toolbar>

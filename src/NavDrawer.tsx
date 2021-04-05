@@ -6,6 +6,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
+import { useHistory } from "react-router";
 import { ROUTES } from "./routeList";
 
 interface Props {
@@ -21,6 +22,7 @@ const useStyles = makeStyles({
 
 export const NavDrawer: React.FC<Props> = ({ open, setOpen }) => {
 	const classes = useStyles();
+	const history = useHistory();
 
 	return (
 		<div>
@@ -31,7 +33,8 @@ export const NavDrawer: React.FC<Props> = ({ open, setOpen }) => {
 							button
 							onClick={() => {
 								setOpen(false);
-								// ! Redirect to route.path
+
+								history.push(route.path);
 							}}
 							key={route.name}
 						>

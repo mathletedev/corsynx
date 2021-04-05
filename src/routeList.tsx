@@ -16,7 +16,7 @@ interface DrawerRoute {
 export const ROUTES: DrawerRoute[] = [
 	{
 		name: "Home",
-		path: "/home",
+		path: "/",
 		icon: <HomeIcon />
 	},
 	{
