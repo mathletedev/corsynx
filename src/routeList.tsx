@@ -4,6 +4,7 @@ import {
 	Gesture as GestureIcon,
 	Home as HomeIcon,
 	Notes as NotesIcon,
+	PlaylistAddCheck as PlaylistAddCheckIcon,
 	Schedule as ScheduleIcon
 } from "@material-ui/icons";
 
@@ -33,6 +34,11 @@ export const ROUTES: DrawerRoute[] = [
 		name: "Calculator",
 		path: "/calculator",
 		icon: <FunctionsIcon />
+	},
+	{
+		name: "To Do",
+		path: "/todo",
+		icon: <PlaylistAddCheckIcon />
 	},
 	{
 		name: "Notes",
