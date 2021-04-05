@@ -7,7 +7,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { useHistory } from "react-router";
-import { ROUTES } from "./routeList";
+import { ROUTES } from "../utils/routeList";
 
 interface Props {
 	open: boolean;

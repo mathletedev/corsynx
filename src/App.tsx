@@ -3,9 +3,9 @@ import "firebase/auth";
 import "firebase/firestore";
 import React from "react";
 import { Route, Switch, useLocation } from "react-router-dom";
-import { firebaseConfig } from "./config.json";
-import { NavBar } from "./NavBar";
-import { ROUTES } from "./routeList";
+import { NavBar } from "./navigation/NavBar";
+import { firebaseConfig } from "./utils/config.json";
+import { ROUTES } from "./utils/routeList";
 
 firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
