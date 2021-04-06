@@ -3,8 +3,6 @@ import {
 	Avatar,
 	Button,
 	IconButton,
-	Menu,
-	MenuItem,
 	Toolbar,
 	Typography
 } from "@material-ui/core";
@@ -37,18 +35,12 @@ const useStyles = makeStyles((theme: Theme) =>
 export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth }) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
-	const [anchor, setAnchor] = React.useState<null | HTMLElement>(null);
 
 	const signIn = () => {
 		console.log("here");
 		const provider = new firebase.auth.GoogleAuthProvider();
 		auth.signInWithPopup(provider);
 	};
-	const signOut = () => auth.signOut();
-
-	const openMenu = (e: React.MouseEvent<HTMLButtonElement>) =>
-		setAnchor(e.currentTarget);
-	const closeMenu = () => setAnchor(null);
 
 	return (
 		<div className={classes.root}>
@@ -70,24 +62,7 @@ export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth }) => {
 					</Typography>
 					{isLoggedIn ? (
 						<div>
-							<Button onClick={openMenu}>
-								<Avatar src={auth.currentUser?.photoURL || undefined} />
-							</Button>
-							<Menu
-								anchorEl={anchor}
-								keepMounted
-								open={Boolean(anchor)}
-								onClose={closeMenu}
-							>
-								<MenuItem
-									onClick={() => {
-										signOut();
-										closeMenu();
-									}}
-								>
-									Sign out
-								</MenuItem>
-							</Menu>
+							<Avatar src={auth.currentUser?.photoURL || undefined} />
 						</div>
 					) : (
 						<Button color="inherit" onClick={signIn}>
@@ -95,7 +70,7 @@ export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth }) => {
 						</Button>
 					)}
 				</Toolbar>
-				{isLoggedIn && <NavDrawer open={open} setOpen={setOpen} />}
+				{isLoggedIn && <NavDrawer open={open} setOpen={setOpen} auth={auth} />}
 			</AppBar>
 		</div>
 	);
