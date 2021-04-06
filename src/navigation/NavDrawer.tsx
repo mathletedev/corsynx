@@ -20,6 +20,7 @@ interface Props {
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	auth: firebase.auth.Auth;
+	db: firebase.firestore.Firestore;
 }
 
 const useStyles = makeStyles({
@@ -28,11 +29,22 @@ const useStyles = makeStyles({
 	}
 });
 
-export const NavDrawer: React.FC<Props> = ({ open, setOpen, auth }) => {
+export const NavDrawer: React.FC<Props> = ({ open, setOpen, auth, db }) => {
 	const classes = useStyles();
 	const history = useHistory();
 
 	const signOut = () => auth.signOut();
+
+	const toggleTheme = () => {
+		const userRef = db.collection("users").doc(auth.currentUser?.uid);
+		userRef.get().then((doc) =>
+			userRef
+				.update({
+					darkMode: !doc.data()?.darkMode
+				})
+				.then(() => window.location.reload())
+		);
+	};
 
 	return (
 		<Drawer open={open} onClose={() => setOpen(false)}>
@@ -55,7 +67,7 @@ export const NavDrawer: React.FC<Props> = ({ open, setOpen, auth }) => {
 				</List>
 				<Divider />
 				<List>
-					<ListItem button key="Toggle Theme">
+					<ListItem button onClick={toggleTheme} key="Toggle Theme">
 						<ListItemIcon>
 							<Brightness4Icon />
 						</ListItemIcon>

@@ -5,11 +5,12 @@ import { NavBar } from "./navigation/NavBar";
 import { ROUTES } from "./utils/routeList";
 
 interface Props {
-	auth: firebase.auth.Auth;
 	user: firebase.User | null | undefined;
+	auth: firebase.auth.Auth;
+	db: firebase.firestore.Firestore;
 }
 
-export const Router: React.FC<Props> = ({ auth, user }) => {
+export const Router: React.FC<Props> = ({ user, auth, db }) => {
 	const location = useLocation();
 	const current =
 		ROUTES.find((route) => location.pathname === route.path)?.name ||
@@ -18,10 +19,10 @@ export const Router: React.FC<Props> = ({ auth, user }) => {
 	return user === undefined ? (
 		<div></div>
 	) : user === null ? (
-		<NavBar title="Corsynx" isLoggedIn={false} auth={auth} />
+		<NavBar title="Corsynx" isLoggedIn={false} auth={auth} db={db} />
 	) : (
 		<Switch>
-			<NavBar title={current} isLoggedIn={true} auth={auth} />
+			<NavBar title={current} isLoggedIn={true} auth={auth} db={db} />
 			<Route
 				path="/"
 				render={() => <div>The page you requested is not found</div>}

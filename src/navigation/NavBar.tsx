@@ -16,6 +16,7 @@ interface Props {
 	title: string;
 	isLoggedIn: boolean;
 	auth: firebase.auth.Auth;
+	db: firebase.firestore.Firestore;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth }) => {
+export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth, db }) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 
@@ -70,7 +71,9 @@ export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth }) => {
 						</Button>
 					)}
 				</Toolbar>
-				{isLoggedIn && <NavDrawer open={open} setOpen={setOpen} auth={auth} />}
+				{isLoggedIn && (
+					<NavDrawer open={open} setOpen={setOpen} auth={auth} db={db} />
+				)}
 			</AppBar>
 		</div>
 	);
