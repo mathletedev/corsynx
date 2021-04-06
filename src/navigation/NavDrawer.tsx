@@ -33,7 +33,7 @@ export const NavDrawer: React.FC<Props> = ({ open, setOpen, auth, db }) => {
 	const classes = useStyles();
 	const history = useHistory();
 
-	const signOut = () => auth.signOut();
+	const signOut = () => auth.signOut().then(() => window.location.reload());
 
 	const toggleTheme = () => {
 		const userRef = db.collection("users").doc(auth.currentUser?.uid);
