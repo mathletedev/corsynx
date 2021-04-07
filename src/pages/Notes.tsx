@@ -47,7 +47,6 @@ export const Notes: React.FC<NotesProps> = ({ auth, db }) => {
 					placeholder="Write your notes here"
 					fullWidth
 					multiline
-					rowsMax={24}
 					margin="normal"
 					InputLabelProps={{
 						shrink: true
