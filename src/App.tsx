@@ -27,7 +27,8 @@ export default () => {
 						if (doc.exists) setDarkMode(doc.data()?.darkMode || false);
 						else
 							db.collection("users").doc(authUser.uid).set({
-								darkMode: false
+								darkMode: false,
+								notes: ""
 							});
 					});
 			}
