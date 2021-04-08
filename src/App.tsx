@@ -17,21 +17,21 @@ export default () => {
 		undefined
 	);
 	const [darkMode, setDarkMode] = React.useState(false);
+
 	auth.onAuthStateChanged(
 		(authUser) => {
 			if (authUser) {
-				db.collection("users")
-					.doc(authUser.uid)
-					.get()
-					.then((doc) => {
-						if (doc.exists) setDarkMode(doc.data()?.darkMode || false);
-						else
-							db.collection("users").doc(authUser.uid).set({
-								darkMode: false,
-								notes: ""
-							});
-					});
+				const userRef = db.collection("users").doc(authUser.uid);
+				userRef.get().then((doc) => {
+					if (doc.exists) setDarkMode(doc.data()?.darkMode);
+					else
+						userRef.set({
+							darkMode: false,
+							notes: ""
+						});
+				});
 			}
+
 			setUser(authUser);
 		},
 		() => setUser(null)
@@ -51,7 +51,7 @@ export default () => {
 		<ThemeProvider theme={theme}>
 			<CssBaseline />
 			<BrowserRouter>
-				<Router user={user} auth={auth} db={db} />
+				<Router user={user} setDarkMode={setDarkMode} auth={auth} db={db} />
 			</BrowserRouter>
 		</ThemeProvider>
 	);

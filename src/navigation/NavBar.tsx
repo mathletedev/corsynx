@@ -14,7 +14,8 @@ import { NavDrawer } from "./NavDrawer";
 
 interface Props {
 	title: string;
-	isLoggedIn: boolean;
+	user: firebase.User | null;
+	setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 	auth: firebase.auth.Auth;
 	db: firebase.firestore.Firestore;
 }
@@ -33,7 +34,13 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth, db }) => {
+export const NavBar: React.FC<Props> = ({
+	title,
+	user,
+	setDarkMode,
+	auth,
+	db
+}) => {
 	const classes = useStyles();
 	const [open, setOpen] = React.useState(false);
 
@@ -47,7 +54,7 @@ export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth, db }) => {
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
-					{isLoggedIn && (
+					{user !== null && (
 						<IconButton
 							edge="start"
 							className={classes.menuButton}
@@ -61,18 +68,25 @@ export const NavBar: React.FC<Props> = ({ title, isLoggedIn, auth, db }) => {
 					<Typography variant="h6" className={classes.title}>
 						{title}
 					</Typography>
-					{isLoggedIn ? (
-						<div>
-							<Avatar src={auth.currentUser?.photoURL || undefined} />
-						</div>
-					) : (
+					{user === null ? (
 						<Button color="inherit" onClick={signIn}>
 							Sign in
 						</Button>
+					) : (
+						<div>
+							<Avatar src={user.photoURL || undefined} />
+						</div>
 					)}
 				</Toolbar>
-				{isLoggedIn && (
-					<NavDrawer open={open} setOpen={setOpen} auth={auth} db={db} />
+				{user !== null && (
+					<NavDrawer
+						open={open}
+						setOpen={setOpen}
+						user={user}
+						setDarkMode={setDarkMode}
+						auth={auth}
+						db={db}
+					/>
 				)}
 			</AppBar>
 		</div>

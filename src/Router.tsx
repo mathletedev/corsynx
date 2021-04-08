@@ -7,11 +7,12 @@ import { ROUTES } from "./utils/routeList";
 
 interface Props {
 	user: firebase.User | null | undefined;
+	setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 	auth: firebase.auth.Auth;
 	db: firebase.firestore.Firestore;
 }
 
-export const Router: React.FC<Props> = ({ user, auth, db }) => {
+export const Router: React.FC<Props> = ({ user, setDarkMode, auth, db }) => {
 	const location = useLocation();
 
 	if (user === null && location.pathname !== "/") {
@@ -25,13 +26,27 @@ export const Router: React.FC<Props> = ({ user, auth, db }) => {
 	return user === undefined ? (
 		<div></div>
 	) : user === null ? (
-		<NavBar title="Corsynx" isLoggedIn={false} auth={auth} db={db} />
+		<div>
+			<NavBar
+				title="Corsynx"
+				user={user}
+				setDarkMode={setDarkMode}
+				auth={auth}
+				db={db}
+			/>
+		</div>
 	) : (
 		<div>
-			<NavBar title={current} isLoggedIn={true} auth={auth} db={db} />
+			<NavBar
+				title={current}
+				user={user}
+				setDarkMode={setDarkMode}
+				auth={auth}
+				db={db}
+			/>
 			<Switch>
 				<Route path="/notes" exact>
-					<Notes auth={auth} db={db} />
+					<Notes user={user} db={db} />
 				</Route>
 			</Switch>
 		</div>

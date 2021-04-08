@@ -5,7 +5,7 @@ import firebase from "firebase/app";
 import React from "react";
 
 interface NotesProps {
-	auth: firebase.auth.Auth;
+	user: firebase.User;
 	db: firebase.firestore.Firestore;
 }
 
@@ -23,11 +23,11 @@ const useStyles = makeStyles((theme: Theme) =>
 	})
 );
 
-export const Notes: React.FC<NotesProps> = ({ auth, db }) => {
+export const Notes: React.FC<NotesProps> = ({ user, db }) => {
 	const classes = useStyles();
 	const [text, setText] = React.useState("");
 
-	const userRef = db.collection("users").doc(auth.currentUser?.uid);
+	const userRef = db.collection("users").doc(user.uid);
 
 	React.useEffect(() => {
 		userRef.get().then((doc) => setText(doc.data()?.notes || ""));

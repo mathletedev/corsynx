@@ -19,6 +19,8 @@ import { ROUTES } from "../utils/routeList";
 interface Props {
 	open: boolean;
 	setOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	user: firebase.User;
+	setDarkMode: React.Dispatch<React.SetStateAction<boolean>>;
 	auth: firebase.auth.Auth;
 	db: firebase.firestore.Firestore;
 }
@@ -29,20 +31,27 @@ const useStyles = makeStyles({
 	}
 });
 
-export const NavDrawer: React.FC<Props> = ({ open, setOpen, auth, db }) => {
+export const NavDrawer: React.FC<Props> = ({
+	open,
+	setOpen,
+	user,
+	setDarkMode,
+	auth,
+	db
+}) => {
 	const classes = useStyles();
 	const history = useHistory();
 
-	const signOut = () => auth.signOut().then(() => window.location.reload());
+	const signOut = () => auth.signOut().then(() => setDarkMode(false));
 
 	const toggleTheme = () => {
-		const userRef = db.collection("users").doc(auth.currentUser?.uid);
+		const userRef = db.collection("users").doc(user.uid);
 		userRef.get().then((doc) =>
 			userRef
 				.update({
 					darkMode: !doc.data()?.darkMode
 				})
-				.then(() => window.location.reload())
+				.then(() => setDarkMode(!doc.data()?.darkMode))
 		);
 	};
 
