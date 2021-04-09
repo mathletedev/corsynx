@@ -3,6 +3,7 @@ import React from "react";
 import { Route, Switch, useHistory, useLocation } from "react-router-dom";
 import { NavBar } from "./navigation/NavBar";
 import { Notes } from "./pages/Notes";
+import { Schedule } from "./pages/Schedule";
 import { ROUTES } from "./utils/routeList";
 
 interface Props {
@@ -47,6 +48,9 @@ export const Router: React.FC<Props> = ({ user, setDarkMode, auth, db }) => {
 			<Switch>
 				<Route path="/notes" exact>
 					<Notes user={user} db={db} />
+				</Route>
+				<Route path="/schedule" exact>
+					<Schedule user={user} auth={auth} db={db} />
 				</Route>
 			</Switch>
 		</div>

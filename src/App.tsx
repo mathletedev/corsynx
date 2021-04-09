@@ -27,7 +27,14 @@ export default () => {
 					else
 						userRef.set({
 							darkMode: false,
-							notes: ""
+							notes: "",
+							schedule: [
+								{
+									name: "",
+									link: "",
+									time: 0
+								}
+							]
 						});
 				});
 			}
