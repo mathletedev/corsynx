@@ -86,7 +86,7 @@ export const Schedule: React.FC<ScheduleProps> = ({ user, auth, db }) => {
 		forceUpdate();
 	};
 
-	const openMeeting = (link: string) => (window.location.href = link);
+	const openMeeting = (link: string) => window.open(link, "_blank");
 
 	const minsToString = (mins: number) => {
 		const hours = Math.floor(mins / 60);
